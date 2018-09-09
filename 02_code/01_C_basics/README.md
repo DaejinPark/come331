@@ -3,6 +3,22 @@
 
 자료구조를 배우기 전에 C프로그래밍 언어에 대한 지식이 필요하다. 최소한의 지식을 예제를 이용하여 소개하기로 한다.
 
+- [C language 기초](#c-language---)
+  * [프로그램 구성](#-------)
+    + [컴파일](#---)
+    + [실행](#--)
+    + [Makefile를 이용한 컴파일,실행 자동화](#makefile----------------)
+  * [입/출력 함수](#-------)
+  * [기본 data type](#---data-type)
+  * [배열 (array)](#----array-)
+  * [포인터 (pointer) 타입](#-----pointer----)
+  * [구조체 (struct)](#-----struct-)
+  * [메모리 동적 할당 (malloc)](#-----------malloc-)
+  * [void pointer](#void-pointer)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 ## 프로그램 구성
 C언어로 구현한 프로그램은 함수의 집합으로 구성되어 있다. 함수 중에 반드시 main()이란 이름의 함수가 존재해야 하며
 프로그램이 시작될 때 main 함수를 실행한다. 함수는 리턴타입, 함수명, ( )안에 입력 변수, 그리고 { } 안에 함수 body로 구성되며, 함수 body에는 반드시 마지막에 리턴 값을 반환해야 한다. 따라서 가장 기본적인 함수 구성은 아래과 같다.
