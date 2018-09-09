@@ -14,7 +14,7 @@
     + [배열 (array)](#----array-)
     + [포인터 (pointer) 타입](#-----pointer----)
     + [구조체 (struct)](#-----struct-)
-  * [메모리 동적 할당 (malloc)](#-----------malloc-)
+  * [메모리 동적 할당 (malloc)](#메모리-동적-할당-(malloc))
   * [void pointer](#void-pointer)
 
 
