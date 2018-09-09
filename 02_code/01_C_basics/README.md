@@ -188,11 +188,11 @@ struct student {
 변수를 정의하고 초기값을 채워보자.
 
 ``` C
-	struct student s1 = {"Hong", 23, 99};
+struct student s1 = {"Hong", 23, 99};
 
-	printf("Student Name: %s\n", s1.name);
-	printf(" --> age  : %d\n", s1.age);
-	printf(" --> score: %d\n", s1.score);
+printf("Student Name: %s\n", s1.name);
+printf(" --> age  : %d\n", s1.age);
+printf(" --> score: %d\n", s1.score);
 ```
 
 s1이라는 변수를 정의함에 있어 그 타입을 구조체 struct student라는 타입으로 지정했다. 항상 뒤에서부터 변수 정의를 해석하면 된다.
@@ -201,12 +201,12 @@ s1이라는 변수를 정의함에 있어 그 타입을 구조체 struct student
 구조체를 가르키는 포인터 변수를 이용해보자.
 
 ``` C
-	struct student s1 = {"Hong", 23, 99};
-  struct student* s1_p = &s1;
+struct student s1 = {"Hong", 23, 99};
+struct student* s1_p = &s1;
 
-	printf("Student Name: %s\n", s1_p->name);
-	printf(" --> age  : %d\n", s1_p->age);
-	printf(" --> score: %d\n", s1_p->score);
+printf("Student Name: %s\n", s1_p->name);
+printf(" --> age  : %d\n", s1_p->age);
+printf(" --> score: %d\n", s1_p->score);
 ```
 
 두번째로 정의된 변수 s1_p에 대해 해석해보자. s1_p라는 변수가 생성되고 하나의 공간을 차지한다. 그 안에 어떤 값을 담을 수 있는 공간인데 그 값은 포인터, 즉 주소만 담을 수 있고 그 주소를 따라가보니 해당 공간에 저장될 값의 종류는 struct student라는 구조체형태라는 것을 알 수 있다. 
