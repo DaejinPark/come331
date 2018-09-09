@@ -9,7 +9,7 @@
     + [실행](#실행)
     + [Makefile를 이용한 컴파일,실행 자동화](#makefile를-이용한-컴파일실행-자동화)
   * [입/출력 함수](#입출력-함수)
-  * [C언어 기본 data type](#cc언어-기본-data-type)
+  * [C언어 기본 data type](#c언어-기본-data-type)
     + [변수와 타입](#변수와-타입)
     + [배열 (array)](#배열-array)
     + [포인터 (pointer) 타입](#포인터-pointer-타입)
