@@ -16,8 +16,6 @@
   * [메모리 동적 할당 (malloc)](#-----------malloc-)
   * [void pointer](#void-pointer)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 
 ## 프로그램 구성
 C언어로 구현한 프로그램은 함수의 집합으로 구성되어 있다. 함수 중에 반드시 main()이란 이름의 함수가 존재해야 하며
