@@ -1,8 +1,8 @@
-## Stack
+# Stack
 
 이제 본격적으로 자료구조를 설계하고 구현해보도록 하자. 가장 기본이 되는 가장 저수준의 자료구조를 struct를 이용하여 다음과 같이 정의해보자. 
 
-### struct를 이용한 기본 노드 자료형 정의
+## struct를 이용한 기본 노드 자료형 정의
 
 ``` C
 struct node {
@@ -62,7 +62,7 @@ main() {
 }
 ```
 
-### void* 자료형의 활용
+## void* 자료형의 활용
 
 이제 void*를 이용하여 변형해보자. void*에 대한 사용법은 C언어 2시간만에 복습하기편을 참고한다.
 
@@ -88,7 +88,7 @@ main() {
 }
 ```
 
-### 노드간에 관계성 표현
+## 노드간에 관계성 표현
 
 이제 자료구조의 기본인 노드가 다른 노드를 가르키도록 연결성을 표현해보자. C언어에서 제공하는 포인터를 이용하연 노드와 노드 사이에 한방향의 관계가 쉽게 표현된다. 
 
@@ -148,21 +148,73 @@ main() {
 }
 ```
 
-### STACK 자료형 정의
+## STACK 자료형 정의
 
 기본 자료향인 node를 정의하였으므로 이제 stack이라는 전체 자료형을 정의해보자. stack은 내부에 포함된 node의 갯수와 최상위 첫번째 node를 가르키는 포인터 변수만 포함하면된다. 이는 stack의 데이타 삽입, 삭제가 최상위 데이터에서만 발생하기 때문다. 다음의 stack의 자료형에 대한 코드를 살펴보자.
 
 ``` C
 struct STACK {
     int count;
-    NODE* top;
+    STACK_NODE* top;
 };
 ```
 
-STACK이라는 이름의 struct 자료형을 정의하였고 내부에 노드 갯수와 최상위 첫번째 노드를 가르키는 포인터 변수로 구성된다. 위에서도 서술한 것 처럼 첫번째 노드로부터 연결된 노드와의 관계를 통해 전체 노드 데이터에 쉽게 접근가능하다.
+STACK이라는 이름의 struct 자료형을 정의하였고 내부에 노드 갯수와 최상위 첫번째 노드를 가르키는 포인터 변수로 구성된다. 위에서도 서술한 것 처럼 첫번째 노드로부터 연결된 노드와의 관계를 통해 전체 노드 데이터에 쉽게 접근가능하다. 개별 노드에 대한 자료형을 합쳐서 Stack을 위한 자료구조는 다음과 같이 정의될 수 있다.
 
+``` C
+struct STACK {
+    int count;
+    STACK_NODE* top;
+};
+
+typdef struct node {
+    void* data;
+    struct node* link;
+} STACK_NODE;
+
+```
+
+위에 정의된 STACK 자료형에 대한 코드를 ADT_stack.h에 저장하자.
 
 이제 자료구조를 구성하는 기본 자료형을 정의하였으므로 이제 이를 활용하여 다양한 처리를 수행하는 함수를 정의하자. 기본 자료형과 (여기서는 NODE)과 함수를 합하여 추상형 자료형이라고 부르기로 하였다. 스택 생성, 데이터 삽입 (push), 데이터 읽기/삭제 (pop)을 위한 함수를 구현해보자.
 
 
+### Stack 생성: create_stack()
+
+그럼 이제 stack 자료구조를 생성하는 함수를 정의해보자. stack을 생성하기 위해 입력으로 정의할 파라메터는 따로없다. 그냥 blank stack 자료구조를 하나 생성하면 되기 때문이다. 함수의 실행결과로 생성된 STACK 자료구조의 포인터를 리턴하면 된다. 따라서 사용자는 이런 형태로 함수를 이용할 것이다.
+
+``` C
+#include "ADT_stack.h"
+
+main() {
+    STACK* new_stack = create_stack();
+}
+```
+
+이제 create_stack() 함수의 프로토타입을 먼저 정의하고 그것을 ADT_stack.h에 저장한다. 이제 ADT_stack.h의 코드는 다음과 같이 정의된다.
+
+``` C
+struct STACK {
+    int count;
+    STACK_NODE* top;
+};
+
+typdef struct node {
+    void* data;
+    struct node* link;
+} STACK_NODE;
+
+STACK* create_stack();
+
+```
+
+create_stack() 함수의 body는 별도의 파일 ADT_stack.c에 구현하도록 한다. 먼저 malloc 함수를 이용하여 STACK 자료형을 담을 공간을 할당받는다. malloc에 대해서는 [2장](../02_C_Review)의 내용을 참고한다. struct로 정의된 각 맴버 변수의 값을 초기화 한다. 내부에 노드가 하나도 없으므로 count는 0이 되고 stack의 top의 위치는 NULL이 되어야 한다. 다음과 같이 코드를 작성하면 된다.
+
+``` C
+STACK* create_stack() {
+    STACK* stack = (STACK*)malloc(sizeof(STACK));
+    stack->count = 0;
+    stack->top = NULL;
+}
+```
 
