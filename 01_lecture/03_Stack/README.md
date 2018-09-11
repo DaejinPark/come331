@@ -161,6 +161,7 @@ struct STACK {
 
 STACK이라는 이름의 struct 자료형을 정의하였고 내부에 노드 갯수와 최상위 첫번째 노드를 가르키는 포인터 변수로 구성된다. 위에서도 서술한 것 처럼 첫번째 노드로부터 연결된 노드와의 관계를 통해 전체 노드 데이터에 쉽게 접근가능하다. 개별 노드에 대한 자료형을 합쳐서 Stack을 위한 자료구조는 다음과 같이 정의될 수 있다.
 
+__ADT_stack.h
 ``` C
 struct STACK {
     int count;
@@ -183,6 +184,7 @@ typdef struct node {
 
 그럼 이제 stack 자료구조를 생성하는 함수를 정의해보자. stack을 생성하기 위해 입력으로 정의할 파라메터는 따로없다. 그냥 blank stack 자료구조를 하나 생성하면 되기 때문이다. 함수의 실행결과로 생성된 STACK 자료구조의 포인터를 리턴하면 된다. 따라서 사용자는 이런 형태로 함수를 이용할 것이다.
 
+__main.c
 ``` C
 #include "ADT_stack.h"
 
@@ -193,6 +195,7 @@ main() {
 
 이제 create_stack() 함수의 프로토타입을 먼저 정의하고 그것을 ADT_stack.h에 저장한다. 이제 ADT_stack.h의 코드는 다음과 같이 정의된다.
 
+__ADT_stack.h
 ``` C
 struct STACK {
     int count;
@@ -210,6 +213,7 @@ STACK* create_stack();
 
 create_stack() 함수의 body는 별도의 파일 ADT_stack.c에 구현하도록 한다. 먼저 malloc 함수를 이용하여 STACK 자료형을 담을 공간을 할당받는다. malloc에 대해서는 [2장](../02_C_Review)의 내용을 참고한다. struct로 정의된 각 맴버 변수의 값을 초기화 한다. 내부에 노드가 하나도 없으므로 count는 0이 되고 stack의 top의 위치는 NULL이 되어야 한다. 다음과 같이 코드를 작성하면 된다.
 
+__ADT_stack.c
 ``` C
 STACK* create_stack() {
     STACK* stack = (STACK*)malloc(sizeof(STACK));
@@ -223,18 +227,16 @@ STACK* create_stack() {
 
 이제 준비된 데이타를 stack 자료구조에 삽입해보자. 삽입할 데이타가 먼저 준비되어 있어야 하며 stack에는 단지 데이타의 주소만 전달하기로 하였다. 따라서 데이타 삽입을 위한 push 함수의 입력 인자로는 삽입대상이 되는 stack과 데이타의 주소가 되어야 한다. 리턴값은 함수 실행의 성공/실패를 리턴하기로 하자. 먼저 ADT_stack.h에 push 함수의 프로토타입을 먼저 정의해야 한다.
 
+__ADT_stack.h
 ``` C
-ADT_stack.h
-
 ... 
 bool push(STACK* stack, void* in);
 ```
 
 이 함수를 이용하여 사용자는 다음과 같은 행태로 데이타 삽입을 구현할 것이다.
 
+__main.c
 ``` C
-main.c
-
 main() {
     STACK* stack = create_stack();
     int a = 10;
@@ -251,5 +253,45 @@ main() {
      
 }
 ```
+
+자 이제 push 함수의 내부를 직접 구현하여 ADT_stack.c에 저정해보자. push의 역활은 전달된 데이타를 내부에 담을 수 있는 공간을 만들고 기존에 만들어진 내부 노드 위에 하나씩 연결하는 것이다. 즉 먼저 전달된 데이타를 담을 수 있는 노드 자료형을 하나 생성해야 한다. 
+__ADT_stack.c
+``` C
+boo push(STACK* stack, void* in) {
+    STACK_NODE* node = (STACK_NODE*)malloc(sizeof(STACK_NODE));
+}
+```
+
+함수 인자로 전달된 데이타를 가르키는 포인터 주소를 노드의 내부 맴버 변수에 저장한다. 그리고 현재 만들어진 노드가 최상위 노드가 되므로 기존의 최상위 노드는 현재 생성된 노드의 다음 노드가 되어야 한다. 이를 위한 코드는 다음과 같다.
+__ADT_stack.c
+``` C
+boo push(STACK* stack, void* in) {
+    STACK_NODE* node = (STACK_NODE*)malloc(sizeof(STACK_NODE));
+    node->data = in;
+    node->link = stack->top;
+}
+```
+
+이제 STACK 자료형의 맴버 변수인 top의 위치는 현재 새롭게 만들어진 노드가 되어야 한다. 최종적으로 stack의 노드 갯수는 1개 증가되어야 한다.
+__ADT_stack.c
+``` C
+boo push(STACK* stack, void* in) {
+    STACK_NODE* node = (STACK_NODE*)malloc(sizeof(STACK_NODE));
+    node->data = in;
+    node->link = stack->top;
+    stack->top = node;
+    stack->count++;
+}
+```
+
+push함수를 한번 실행한 결과 변수 a를 저장한 stack 내부의 구조는 다음과 같은 모습이 될 것이다.
+
+![push_삽입1](./images/push_삽입1.png)
+
+push 함수를 한번더 실행하여 변수 b를 저장하고 나면 stack의 내부 자료구조는 다음과 같은 형태로 재구성될 것이다.
+
+![push_삽입2](./images/push_삽입2.png)
+
+
 
 
