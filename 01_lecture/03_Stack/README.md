@@ -215,6 +215,41 @@ STACK* create_stack() {
     STACK* stack = (STACK*)malloc(sizeof(STACK));
     stack->count = 0;
     stack->top = NULL;
+    return stack;
 }
 ```
+
+### 데이터 Push
+
+이제 준비된 데이타를 stack 자료구조에 삽입해보자. 삽입할 데이타가 먼저 준비되어 있어야 하며 stack에는 단지 데이타의 주소만 전달하기로 하였다. 따라서 데이타 삽입을 위한 push 함수의 입력 인자로는 삽입대상이 되는 stack과 데이타의 주소가 되어야 한다. 리턴값은 함수 실행의 성공/실패를 리턴하기로 하자. 먼저 ADT_stack.h에 push 함수의 프로토타입을 먼저 정의해야 한다.
+
+``` C
+ADT_stack.h
+
+... 
+bool push(STACK* stack, void* in);
+```
+
+이 함수를 이용하여 사용자는 다음과 같은 행태로 데이타 삽입을 구현할 것이다.
+
+``` C
+main.c
+
+main() {
+    STACK* stack = create_stack();
+    int a = 10;
+    int b = 20;
+    bool result;
+    
+    result = push(stack, &a);
+    if(result == false)
+        printf("error happens\n");
+        
+    result = push(stack, &b);
+    if(result == false)
+        printf("error happens\n");
+     
+}
+```
+
 
